@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/hello', function () {
-    $data=["massage"=>"hello world"];
-    return response()->json($data);
-});
+// Route::get('/hello', function () {
+//     $data=["massage"=>"hello world"];
+//     return response()->json($data);
+// });
 
 // Route::get('/hello', function () {
 //     return "hello world";
 // });
+
+Route::apiResource('/mahasiswa', MahasiswaController::class);
