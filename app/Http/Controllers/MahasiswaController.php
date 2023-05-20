@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMahasiswaRequest;
+use App\Http\Requests\UpdateMahasiswaRequest;
+use App\Http\Resources\MahasiswaResource;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
-use App\Http\Resources\MahasiswaResource;
-use App\Http\Requests\StoreMahasiswaRequest;
 
 class MahasiswaController extends Controller
 {
@@ -16,7 +17,7 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        return MahasiswaResource::collection(Mahasiswa::paginate(3));
+        return MahasiswaResource::collection(Mahasiswa::all());
     }
 
     /**
@@ -37,17 +38,17 @@ class MahasiswaController extends Controller
      */
     public function store(StoreMahasiswaRequest $request)
     {
-        return response()->json('hello');
-        return new MahasiswaResource(Mahasiswa:create(
+        return new MahasiswaResource(Mahasiswa::create(
             [
-                'Nim'=>$request->Nim,
-                'Nama'=>$request->Nama,
-                'Tanggal_Lahir'=>$request->Tanggal_Lahir,
-                'kelas_id'=>$request->kelas_id,
-                'Jurusan'=>$request->Jurusan,
-                'No_Handphone'=>$request->No_Handphone,
-                'Email'=>$request->Email,
-            ]));
+                'Nim' => $request->Nim,
+                'Nama' => $request->Nama,
+                'Tanggal_Lahir' => $request->Tanggal_Lahir,
+                'kelas_id' => $request->Kelas,
+                'Jurusan' => $request->Jurusan,
+                'No_Handphone' => $request->No_Handphone,
+                'Email' => $request->Email,
+            ]
+        ));
     }
 
     /**
@@ -81,7 +82,16 @@ class MahasiswaController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        //
+        $mahasiswa->update([
+            'Nim' => $request->Nim,
+            'Nama' => $request->Nama,
+            'Tanggal_Lahir' => $request->Tanggal_Lahir,
+            'Kelas' => $request->kelas_id,
+            'Jurusan' => $request->Jurusan,
+            'No_Handphone' => $request->No_Handphone,
+            'Email' => $request->Email,
+        ]);
+        return new MahasiswaResource($mahasiswa);
     }
 
     /**
